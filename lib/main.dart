@@ -7,14 +7,15 @@ import 'package:puntorojo/widgets/inicio_page.dart';
 import 'package:puntorojo/widgets/login_page.dart';
 import 'package:puntorojo/widgets/nosotros_page.dart';
 import 'package:puntorojo/widgets/servicios_page..dart';
-import 'package:puntorojo/widgets/servicios_page.dart';
-import 'package:puntorojo/widgets/dashboard_page.dart'; // Tu panel de admin
-
+import 'package:puntorojo/widgets/servicios_page.dart'; // Corregido: eliminé el import repetido
+import 'package:puntorojo/widgets/dashboard_page.dart'; // ✅ Importar dashboard
 import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -34,13 +35,13 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const HomePage(),
-        '/login': (context) => const LoginPage(),
+        '/admin': (context) => const LoginPage(),
+        '/admin-dashboard': (context) => const DashboardPage(), // ✅
         '/inicio': (context) => const InicioPage(),
         '/nosotros': (context) => const NosotrosPage(),
         '/servicios': (context) => const ServiciosPage(),
         '/audiovisual': (context) => const AudiovisualPage(),
         '/contacto': (context) => const ContactoPage(),
-        '/dashboard': (context) => const DashboardPage(), // Ruta del panel admin
       },
     );
   }

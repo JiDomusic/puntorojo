@@ -32,8 +32,8 @@ class CentralLogo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Image.asset(
       logoPath,
-      width: 200,
-      height: 200,
+      width: 180,
+      height: 180,
       fit: BoxFit.contain,
     );
   }
