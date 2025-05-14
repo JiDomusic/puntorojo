@@ -3,11 +3,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:puntorojo/widgets/audiovisual_page.dart';
 import 'package:puntorojo/widgets/contacto_page.dart';
 import 'package:puntorojo/widgets/home_page.dart';
+
 import 'package:puntorojo/widgets/inicio_page.dart';
 import 'package:puntorojo/widgets/login_page.dart';
 import 'package:puntorojo/widgets/nosotros_page.dart';
 import 'package:puntorojo/widgets/servicios_page..dart';
 import 'firebase_options.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

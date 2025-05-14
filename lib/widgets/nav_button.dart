@@ -9,7 +9,7 @@ class NavButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0), // Espaciado vertical entre botones
+      padding: const EdgeInsets.symmetric(vertical: 16.0), // Espaciado vertical entre botones
       child: ElevatedButton(
         onPressed: onTap,
         child: Text(

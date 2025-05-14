@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
           Expanded(
             child: SideSection(
               isLeft: true,
-              logoPath: 'assets/images/Punto Rojo_Redes_Identidad_Perfil_01.jpg',
+              logoPath: 'images/coopinga.png',
               sectionId: 'cooperativa',
             ),
           ),
@@ -25,7 +25,7 @@ class HomePage extends StatelessWidget {
           Expanded(
             child: SideSection(
               isLeft: false,
-              logoPath: 'assets/images/logo_right.png',
+              logoPath: 'images/puntorojo.jpg',
               sectionId: 'audiovisual',
             ),
           ),
