@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:puntorojo/widgets/side_section.dart';
-import 'widgets/side_section.dart';
+
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
           Expanded(
             child: SideSection(
               isLeft: true,
-              logoPath: 'assets/images/logo_left.png',
+              logoPath: 'assets/images/Punto Rojo_Redes_Identidad_Perfil_01.jpg',
               sectionId: 'cooperativa',
             ),
           ),
