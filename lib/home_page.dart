@@ -25,7 +25,7 @@ class HomePage extends StatelessWidget {
                 Divider(),
                 SideSection(
                   isLeft: false,
-                  logoPath: 'assets/images/Punto Rojo_Redes_Identidad_Perfil_01.jpg',
+                  logoPath: 'assets/images/puntorojo3.png',
                   sectionId: 'audiovisual',
                 ),
               ],
