@@ -12,17 +12,17 @@ class NavButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 16.0), // Espaciado vertical entre botones
       child: ElevatedButton(
         onPressed: onTap,
-        child: Text(
-          title,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-        ),
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.white, backgroundColor: Colors.blueGrey.shade800,
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          elevation: 5, // Sombra para dar profundidad
+          elevation: 8, // Sombra para dar profundidad
+        ),
+        child: Text(
+          title,
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
         ),
       ),
     );

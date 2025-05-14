@@ -46,7 +46,7 @@ class InicioPage extends StatelessWidget {
               ),
               const SizedBox(height: 12),
 
-              ...content.map((item) => _buildVideoCard(item)).toList(),
+              ...content.map((item) => _buildVideoCard(item)),
 
               const SizedBox(height: 32),
               const Text(

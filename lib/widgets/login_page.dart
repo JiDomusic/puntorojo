@@ -15,12 +15,13 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> _login() async {
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
       if (!mounted) return;
-      Navigator.pushReplacementNamed(context, '/admin');
+      // Redirige al panel de admin si login fue exitoso
+      Navigator.pushReplacementNamed(context, '/inicio');
     } on FirebaseAuthException catch (e) {
       setState(() => errorMessage = e.message);
     }
@@ -32,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: Colors.grey.shade100,
       body: Center(
         child: Card(
-          elevation: 6,
+          elevation: 8,
           margin: const EdgeInsets.symmetric(horizontal: 24),
           child: Padding(
             padding: const EdgeInsets.all(24),
@@ -41,9 +42,9 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 const Text(
                   'Inicio de sesión (Admin)',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 20),
                 TextField(
                   controller: _emailController,
                   decoration: const InputDecoration(labelText: 'Email'),
@@ -56,10 +57,10 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 if (errorMessage != null)
                   Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: Text(errorMessage!, style: TextStyle(color: Colors.red)),
+                    padding: const EdgeInsets.only(top: 12),
+                    child: Text(errorMessage!, style: const TextStyle(color: Colors.red)),
                   ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: _login,
                   child: const Text('Ingresar'),
