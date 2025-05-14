@@ -31,8 +31,27 @@
 
   <title>puntorojo</title>
   <link rel="manifest" href="manifest.json">
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js"></script>
+
+  <script>
+    // Configuración de tu app Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyCy1ebHorTaRBgIm4GzicdtDsIbsnKuTYE",
+      authDomain: "puntorojo-9a6ce.firebaseapp.com",
+      projectId: "puntorojo-9a6ce",
+      storageBucket: "puntorojo-9a6ce.firebasestorage.app",
+      messagingSenderId: "826307552004",
+      appId: "1:826307552004:web:075cf163a2436cfaa82651"
+    };
+
+    // Inicializar Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
 </head>
 <body>
-  <script src="flutter_bootstrap.js" async></script>
+<script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
