@@ -1,101 +1,162 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';  // Importar Firebase
-import 'package:puntorojo/widgets/SubirContactoScreen.dart';
-import 'package:puntorojo/widgets/SubirNosotrosScreen.dart';
-import 'package:puntorojo/widgets/SubirProyectosScreen.dart';
-import 'package:puntorojo/widgets/SubirServicioScreen.dart';
-import 'package:puntorojo/widgets/SubirServicios2Screen.dart';
-import 'package:puntorojo/widgets/SubirTestimoniosScreen.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();  // Asegurarse de que todo está inicializado antes de ejecutar la app
+  WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp();  // Inicializa Firebase
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      apiKey: "AIzaSyCy1ebHorTaRBgIm4GzicdtDsIbsnKuTYE",
+      authDomain: "puntorojo-9a6ce.firebaseapp.com",
+      projectId: "puntorojo-9a6ce",
+      storageBucket: "puntorojo-9a6ce.firebasestorage.app",
+      messagingSenderId: "826307552004",
+      appId: "1:826307552004:web:075cf163a2436cfaa82651",
+    ),
+  );
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Página Principal',
-      initialRoute: '/',
-      routes: {
-        '/': (context) => HomeScreen(), // Pantalla principal
-        '/subir-servicio': (context) => SubirServicioScreen(), // Ruta para subir servicio
-        '/subir-testimonio': (context) => SubirTestimoniosScreen(), // Ruta para testimonios
-        '/subir-proyecto': (context) => SubirProyectosScreen(), // Ruta para proyectos
-        '/subir-contacto': (context) => SubirContactoScreen(), // Ruta para contacto
-        '/subir-nosotros': (context) => SubirNosotrosScreen(), // Ruta para nosotros
-        '/subir-servicios2': (context) => SubirServicios2Screen(), // Ruta para servicios 2
-      },
+      title: 'Web Pública',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: Colors.black,
+        primaryColor: Colors.white,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.black,
+          foregroundColor: Colors.white,
+          elevation: 1,
+        ),
+        textTheme: const TextTheme(
+          bodyLarge: TextStyle(color: Colors.white),
+          bodyMedium: TextStyle(color: Colors.white),
+          titleLarge: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            foregroundColor: Colors.white,
+            backgroundColor: Colors.grey[900],
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+            textStyle: const TextStyle(fontSize: 16),
+          ),
+        ),
+      ),
+      home: const HomeScreen(),
     );
   }
 }
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  void _navigateTo(BuildContext context, String title) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => SubMenuScreen(title: title)),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    // Botón animado reutilizable:
+    Widget animatedButton(BuildContext context, String label, VoidCallback onTap) {
+      return _AnimatedElevatedButton(label: label, onTap: onTap);
+    }
+
     return Scaffold(
-      appBar: AppBar(title: Text('Página Principal')),
-      body: Row(
+      appBar: AppBar(title: const Text('Inicio')),
+      body: Column(
         children: [
-          // Barra lateral izquierda (Cooperativa Inga)
-          NavigationPanel(
-            position: 'left',
-            context: context,
-          ),
-          // Contenido principal (botones para navegar)
+          const SizedBox(height: 20),
           Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: Row(
               children: [
-                Text('Bienvenido a la Página Principal', style: TextStyle(fontSize: 24)),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/subir-servicio');
-                  },
-                  child: Text('Subir Servicio'),
+                // Punto Rojo
+                Expanded(
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        right: BorderSide(color: Colors.grey, width: 1),
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // Imagen centrada
+                        Center(
+                          child: Image.asset('images/puntorojo.jpg',
+                              width: 150, height: 150),
+                        ),
+                        const SizedBox(height: 20),
+                        const Text('Punto Rojo',
+                            style: TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white)),
+                        const SizedBox(height: 20),
+                        animatedButton(context, 'Nosotros',
+                                () => _navigateTo(context, 'Nosotros')),
+                        animatedButton(context, 'Historia',
+                                () => _navigateTo(context, 'Historia')),
+                        animatedButton(context, 'Contacto',
+                                () => _navigateTo(context, 'Contacto')),
+                        animatedButton(context, 'Audiovisuales',
+                                () => _navigateTo(context, 'Audiovisuales')),
+                        animatedButton(context, 'Fotos',
+                                () => _navigateTo(context, 'Fotos')),
+                      ],
+                    ),
+                  ),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/subir-testimonio');
-                  },
-                  child: Text('Subir Testimonio'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/subir-proyecto');
-                  },
-                  child: Text('Subir Proyecto'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/subir-contacto');
-                  },
-                  child: Text('Subir Contacto'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/subir-nosotros');
-                  },
-                  child: Text('Subir Nosotros'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/subir-servicios2');
-                  },
-                  child: Text('Subir Servicios 2'),
+
+                // Cooperativa Inga
+                Expanded(
+                  child: Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // Imagen centrada
+                        Center(
+                          child: Image.asset('images/coopinga.png',
+                              width: 150, height: 150),
+                        ),
+                        const SizedBox(height: 20),
+                        const Text('Cooperativa Inga',
+                            style: TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white)),
+                        const SizedBox(height: 20),
+                        animatedButton(context, 'Cooperativa',
+                                () => _navigateTo(context, 'Cooperativa')),
+                        animatedButton(context, 'Quienes Somos',
+                                () => _navigateTo(context, 'Quienes Somos')),
+                        animatedButton(context, 'Contacto',
+                                () => _navigateTo(context, 'Contacto')),
+                        animatedButton(context, 'Servicios',
+                                () => _navigateTo(context, 'Servicios')),
+                        animatedButton(context, 'Videos',
+                                () => _navigateTo(context, 'Videos')),
+                        animatedButton(context, 'Fotos',
+                                () => _navigateTo(context, 'Fotos')),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
-          // Barra lateral derecha (Punto Rojo)
-          NavigationPanel(
-            position: 'right',
-            context: context,
+
+          // Botón Videos extra abajo centrado
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: _AnimatedElevatedButton(
+              label: 'Videos',
+              icon: Icons.video_library,
+              onTap: () => _navigateTo(context, 'Videos'),
+            ),
           ),
         ],
       ),
@@ -103,63 +164,100 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class NavigationPanel extends StatelessWidget {
-  final String position;
-  final BuildContext context;
+class _AnimatedElevatedButton extends StatefulWidget {
+  final String label;
+  final VoidCallback onTap;
+  final IconData? icon;
 
-  NavigationPanel({required this.position, required this.context});
+  const _AnimatedElevatedButton({
+    required this.label,
+    required this.onTap,
+    this.icon,
+  });
+
+  @override
+  State<_AnimatedElevatedButton> createState() => _AnimatedElevatedButtonState();
+}
+
+class _AnimatedElevatedButtonState extends State<_AnimatedElevatedButton> {
+  bool _pressed = false;
+
+  void _onTapDown(TapDownDetails details) {
+    setState(() {
+      _pressed = true;
+    });
+  }
+
+  void _onTapUp(TapUpDetails details) {
+    setState(() {
+      _pressed = false;
+    });
+    widget.onTap();
+  }
+
+  void _onTapCancel() {
+    setState(() {
+      _pressed = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 200,
-      height: double.infinity,
-      color: position == 'left' ? Colors.blueGrey : Colors.red, // Diferente color por cada lado
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ListTile(
-            title: Text(position == 'left' ? 'Cooperativa Inga' : 'Punto Rojo'),
-            leading: Icon(Icons.home),
+    final elevation = _pressed ? 12.0 : 4.0;
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: GestureDetector(
+        onTapDown: _onTapDown,
+        onTapUp: _onTapUp,
+        onTapCancel: _onTapCancel,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 100),
+          curve: Curves.easeInOut,
+          decoration: BoxDecoration(
+            color: Colors.grey[900],
+            borderRadius: BorderRadius.circular(8),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.6),
+                offset: Offset(0, elevation / 2),
+                blurRadius: elevation,
+              )
+            ],
           ),
-          ListTile(
-            title: Text('Inicio'),
-            onTap: () {
-              Navigator.pushNamed(context, '/'); // Navegar al inicio
-            },
+          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 24),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (widget.icon != null) ...[
+                Icon(widget.icon, color: Colors.white),
+                const SizedBox(width: 8),
+              ],
+              Text(widget.label,
+                  style: const TextStyle(
+                      color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600)),
+            ],
           ),
-          ListTile(
-            title: Text('Servicios'),
-            onTap: () {
-              Navigator.pushNamed(context, '/subir-servicio');
-            },
-          ),
-          ListTile(
-            title: Text('Testimonios'),
-            onTap: () {
-              Navigator.pushNamed(context, '/subir-testimonio');
-            },
-          ),
-          ListTile(
-            title: Text('Proyectos Sociales'),
-            onTap: () {
-              Navigator.pushNamed(context, '/subir-proyecto');
-            },
-          ),
-          ListTile(
-            title: Text('Contacto'),
-            onTap: () {
-              Navigator.pushNamed(context, '/subir-contacto');
-            },
-          ),
-          ListTile(
-            title: Text('Nosotros'),
-            onTap: () {
-              Navigator.pushNamed(context, '/subir-nosotros');
-            },
-          ),
-        ],
+        ),
+      ),
+    );
+  }
+}
+
+class SubMenuScreen extends StatelessWidget {
+  final String title;
+
+  const SubMenuScreen({super.key, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(title)),
+      body: Center(
+        child: Text(
+          'Sección: $title',
+          style: const TextStyle(fontSize: 28, color: Colors.white),
+        ),
       ),
     );
   }
