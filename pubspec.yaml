@@ -18,6 +18,8 @@ dependencies:
   firebase_auth: ^5.5.3
   cloud_firestore: ^5.4.1
   cupertino_icons: ^1.0.8
+  video_player: ^2.7.0
+  flutter_animate: ^4.1.1
 
 dev_dependencies:
   flutter_test:
@@ -28,4 +30,8 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/
+    - assets/images/coopinga.png
+    - assets/images/puntorojo4.jpg
+    - assets/images/puntorojo2.jpg
+    - assets/images/puntorojo3.png
+    - assets/images/puntorojo.jpg

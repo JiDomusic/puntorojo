@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_web_plugins/url_strategy.dart'; // Para eliminar el "#" de las URLs en web
+import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:puntorojo/sections/contacto_Inga.dart';
+import 'package:puntorojo/sections/historia.dart';
+import 'package:puntorojo/sections/contacto.dart';
+import 'package:puntorojo/sections/audiovisuales.dart';
+import 'package:puntorojo/sections/fotos.dart';
+import 'package:puntorojo/sections/cooperativa.dart';
+import 'package:puntorojo/sections/quienes_somos.dart';
+import 'package:puntorojo/sections/servicios.dart';
+import 'package:puntorojo/sections/videos.dart';
+import 'package:puntorojo/sections/fotos2.dart';
+
+import 'nosotros.dart';
 
 Future<void> main() async {
-  usePathUrlStrategy(); // solo si es web, opcional pero recomendable
+  usePathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
@@ -18,7 +30,6 @@ Future<void> main() async {
 
   runApp(const MyApp());
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -39,7 +50,8 @@ class MyApp extends StatelessWidget {
         textTheme: const TextTheme(
           bodyLarge: TextStyle(color: Colors.white),
           bodyMedium: TextStyle(color: Colors.white),
-          titleLarge: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          titleLarge:
+          TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
@@ -55,94 +67,269 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen>
+    with TickerProviderStateMixin {
+  late final AnimationController _leftController;
+  late final Animation<Offset> _leftOffsetAnimation;
+  late final AnimationController _rightController;
+  late final Animation<Offset> _rightOffsetAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _leftController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 800),
+    );
+    _leftOffsetAnimation =
+        Tween<Offset>(begin: const Offset(-0.3, 0), end: Offset.zero).animate(
+          CurvedAnimation(parent: _leftController, curve: Curves.easeOut),
+        );
+
+    _rightController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 800),
+    );
+    _rightOffsetAnimation =
+        Tween<Offset>(begin: const Offset(0.3, 0), end: Offset.zero).animate(
+          CurvedAnimation(parent: _rightController, curve: Curves.easeOut),
+        );
+
+    _leftController.forward();
+    _rightController.forward();
+  }
+
+  @override
+  void dispose() {
+    _leftController.dispose();
+    _rightController.dispose();
+    super.dispose();
+  }
+
   void _navigateTo(BuildContext context, String title) {
+    Widget screen;
+    switch (title) {
+      case 'Nosotros':
+        screen = const Nosotros();
+        break;
+      case 'Historia':
+        screen = const Historia();
+        break;
+      case 'Contacto':
+        screen = const contacto();
+        break;
+      case 'Audiovisuales':
+        screen = const audiovisuales();
+        break;
+      case 'Fotos':
+        screen = const fotos();
+        break;
+      case 'Cooperativa':
+        screen = const cooperativa();
+        break;
+      case 'Quienes Somos':
+        screen = const quienes_somos();
+        break;
+      case 'Contacto2':
+        screen = const contacto_inga();
+        break;
+      case 'Servicios':
+        screen = const servicios();
+        break;
+      case 'Videos':
+        screen = const videos();
+        break;
+      case 'Fotos2':
+        screen = const fotos2();
+        break;
+      default:
+        screen = const Nosotros();
+    }
+
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (_) => SubMenuScreen(title: title)),
+      MaterialPageRoute(builder: (_) => screen),
+    );
+  }
+
+  Widget animatedButton(String label, VoidCallback onTap, {IconData? icon}) {
+    return _AnimatedElevatedButton(label: label, onTap: onTap, icon: icon);
+  }
+
+  Widget buildContent({
+    required String title,
+    required String imagePath,
+    required List<Map<String, String>> buttons,
+  }) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Center(
+          child: Image.asset(imagePath, width: 200, height: 200),
+        ),
+        const SizedBox(height: 20),
+        Text(title,
+            style: const TextStyle(
+                fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white)),
+        const SizedBox(height: 20),
+        for (var btn in buttons)
+          animatedButton(
+            btn['label']!,
+                () => _navigateTo(context, btn['label']!),
+          ),
+      ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget animatedButton(BuildContext context, String label, VoidCallback onTap) {
-      return _AnimatedElevatedButton(label: label, onTap: onTap);
-    }
+    final isMobile = MediaQuery.of(context).size.width < 700;
 
     return Scaffold(
       appBar: AppBar(title: const Text('Inicio')),
-      body: Column(
-        children: [
-          const SizedBox(height: 20),
-          Expanded(
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      border: Border(
-                        right: BorderSide(color: Colors.grey, width: 1),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+              child: Column(
+                children: [
+                  if (isMobile) ...[
+                    SlideTransition(
+                      position: _leftOffsetAnimation,
+                      child: FadeTransition(
+                        opacity: _leftController,
+                        child: Container(
+                          constraints: const BoxConstraints(maxWidth: 400),
+                          padding: const EdgeInsets.all(16),
+                          margin: const EdgeInsets.only(bottom: 30),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[900],
+                            borderRadius: BorderRadius.circular(16),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.white.withOpacity(0.1),
+                                blurRadius: 10,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: buildContent(
+                            title: 'Punto Rojo',
+                            imagePath: 'assets/images/puntorojo2.jpg',
+                            buttons: [
+                              {'label': 'Nosotros'},
+                              {'label': 'Historia'},
+                              {'label': 'Contacto'},
+                              {'label': 'Audiovisuales'},
+                              {'label': 'Fotos'},
+                            ],
+                          ),
+                        ),
                       ),
                     ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Center(
-                          child: Image.asset('images/puntorojo.jpg',
-                              width: 300, height: 300),
+                    SlideTransition(
+                      position: _rightOffsetAnimation,
+                      child: FadeTransition(
+                        opacity: _rightController,
+                        child: Container(
+                          constraints: const BoxConstraints(maxWidth: 400),
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[900],
+                            borderRadius: BorderRadius.circular(16),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.white.withOpacity(0.1),
+                                blurRadius: 10,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: buildContent(
+                            title: 'Cooperativa Inga',
+                            imagePath: 'assets/images/coopinga.png',
+                            buttons: [
+                              {'label': 'Cooperativa'},
+                              {'label': 'Quienes Somos'},
+                              {'label': 'Contacto2'},
+                              {'label': 'Servicios'},
+                              {'label': 'Videos'},
+                              {'label': 'Fotos2'},
+                            ],
+                          ),
                         ),
-                        const SizedBox(height: 20),
-                        const Text('Punto Rojo',
-                            style: TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white)),
-                        const SizedBox(height: 20),
-                        animatedButton(context, 'Nosotros', () => _navigateTo(context, 'Nosotros')),
-                        animatedButton(context, 'Historia', () => _navigateTo(context, 'Historia')),
-                        animatedButton(context, 'Contacto', () => _navigateTo(context, 'Contacto')),
-                        animatedButton(context, 'Audiovisuales', () => _navigateTo(context, 'Audiovisuales')),
-                        animatedButton(context, 'Fotos', () => _navigateTo(context, 'Fotos')),
+                      ),
+                    ),
+                  ] else ...[
+                    Row(
+                      children: [
+                        Expanded(
+                          child: SlideTransition(
+                            position: _leftOffsetAnimation,
+                            child: FadeTransition(
+                              opacity: _leftController,
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  border: Border(
+                                    right:
+                                    BorderSide(color: Colors.grey, width: 2),
+                                  ),
+                                ),
+                                child: buildContent(
+                                  title: 'Punto Rojo',
+                                  imagePath: 'assets/images/puntorojo2.jpg',
+                                  buttons: [
+                                    {'label': 'Nosotros'},
+                                    {'label': 'Historia'},
+                                    {'label': 'Contacto'},
+                                    {'label': 'Audiovisuales'},
+                                    {'label': 'Fotos'},
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: SlideTransition(
+                            position: _rightOffsetAnimation,
+                            child: FadeTransition(
+                              opacity: _rightController,
+                              child: buildContent(
+                                title: 'Cooperativa Inga',
+                                imagePath: 'assets/images/coopinga.png',
+                                buttons: [
+                                  {'label': 'Cooperativa'},
+                                  {'label': 'Quienes Somos'},
+                                  {'label': 'Contacto2'},
+                                  {'label': 'Servicios'},
+                                  {'label': 'Videos'},
+                                  {'label': 'Fotos2'},
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Center(
-                          child: Image.asset('images/coopinga.png',
-                              width: 300, height: 300),
-                        ),
-                        const SizedBox(height: 20),
-                        const Text('Cooperativa Inga',
-                            style: TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white)),
-                        const SizedBox(height: 20),
-                        animatedButton(context, 'Cooperativa', () => _navigateTo(context, 'Cooperativa')),
-                        animatedButton(context, 'Quienes Somos', () => _navigateTo(context, 'Quienes Somos')),
-                        animatedButton(context, 'Contacto', () => _navigateTo(context, 'Contacto')),
-                        animatedButton(context, 'Servicios', () => _navigateTo(context, 'Servicios')),
-                        animatedButton(context, 'Videos', () => _navigateTo(context, 'Videos')),
-                        animatedButton(context, 'Fotos', () => _navigateTo(context, 'Fotos')),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+                  ],
+                  const SizedBox(height: 30),
+                  animatedButton('Videos', () => _navigateTo(context, 'Videos'),
+                      icon: Icons.video_library),
+                ],
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: _AnimatedElevatedButton(
-              label: 'Videos',
-              icon: Icons.video_library,
-              onTap: () => _navigateTo(context, 'Videos'),
-            ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }
@@ -219,28 +406,11 @@ class _AnimatedElevatedButtonState extends State<_AnimatedElevatedButton> {
               ],
               Text(widget.label,
                   style: const TextStyle(
-                      color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600)),
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600)),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class SubMenuScreen extends StatelessWidget {
-  final String title;
-
-  const SubMenuScreen({super.key, required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: Center(
-        child: Text(
-          'Sección: $title',
-          style: const TextStyle(fontSize: 28, color: Colors.white),
         ),
       ),
     );
