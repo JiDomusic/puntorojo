@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_web_plugins/url_strategy.dart'; // Para eliminar el "#" de las URLs en web
 
-void main() async {
+Future<void> main() async {
+  usePathUrlStrategy(); // solo si es web, opcional pero recomendable
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
@@ -9,7 +11,6 @@ void main() async {
       apiKey: "AIzaSyCy1ebHorTaRBgIm4GzicdtDsIbsnKuTYE",
       authDomain: "puntorojo-9a6ce.firebaseapp.com",
       projectId: "puntorojo-9a6ce",
-      storageBucket: "puntorojo-9a6ce.firebasestorage.app",
       messagingSenderId: "826307552004",
       appId: "1:826307552004:web:075cf163a2436cfaa82651",
     ),
@@ -18,8 +19,10 @@ void main() async {
   runApp(const MyApp());
 }
 
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -64,7 +67,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Botón animado reutilizable:
     Widget animatedButton(BuildContext context, String label, VoidCallback onTap) {
       return _AnimatedElevatedButton(label: label, onTap: onTap);
     }
@@ -77,7 +79,6 @@ class HomeScreen extends StatelessWidget {
           Expanded(
             child: Row(
               children: [
-                // Punto Rojo
                 Expanded(
                   child: Container(
                     decoration: const BoxDecoration(
@@ -88,7 +89,6 @@ class HomeScreen extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Imagen centrada
                         Center(
                           child: Image.asset('images/puntorojo.jpg',
                               width: 150, height: 150),
@@ -98,28 +98,20 @@ class HomeScreen extends StatelessWidget {
                             style: TextStyle(
                                 fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white)),
                         const SizedBox(height: 20),
-                        animatedButton(context, 'Nosotros',
-                                () => _navigateTo(context, 'Nosotros')),
-                        animatedButton(context, 'Historia',
-                                () => _navigateTo(context, 'Historia')),
-                        animatedButton(context, 'Contacto',
-                                () => _navigateTo(context, 'Contacto')),
-                        animatedButton(context, 'Audiovisuales',
-                                () => _navigateTo(context, 'Audiovisuales')),
-                        animatedButton(context, 'Fotos',
-                                () => _navigateTo(context, 'Fotos')),
+                        animatedButton(context, 'Nosotros', () => _navigateTo(context, 'Nosotros')),
+                        animatedButton(context, 'Historia', () => _navigateTo(context, 'Historia')),
+                        animatedButton(context, 'Contacto', () => _navigateTo(context, 'Contacto')),
+                        animatedButton(context, 'Audiovisuales', () => _navigateTo(context, 'Audiovisuales')),
+                        animatedButton(context, 'Fotos', () => _navigateTo(context, 'Fotos')),
                       ],
                     ),
                   ),
                 ),
-
-                // Cooperativa Inga
                 Expanded(
                   child: Container(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Imagen centrada
                         Center(
                           child: Image.asset('images/coopinga.png',
                               width: 150, height: 150),
@@ -129,18 +121,12 @@ class HomeScreen extends StatelessWidget {
                             style: TextStyle(
                                 fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white)),
                         const SizedBox(height: 20),
-                        animatedButton(context, 'Cooperativa',
-                                () => _navigateTo(context, 'Cooperativa')),
-                        animatedButton(context, 'Quienes Somos',
-                                () => _navigateTo(context, 'Quienes Somos')),
-                        animatedButton(context, 'Contacto',
-                                () => _navigateTo(context, 'Contacto')),
-                        animatedButton(context, 'Servicios',
-                                () => _navigateTo(context, 'Servicios')),
-                        animatedButton(context, 'Videos',
-                                () => _navigateTo(context, 'Videos')),
-                        animatedButton(context, 'Fotos',
-                                () => _navigateTo(context, 'Fotos')),
+                        animatedButton(context, 'Cooperativa', () => _navigateTo(context, 'Cooperativa')),
+                        animatedButton(context, 'Quienes Somos', () => _navigateTo(context, 'Quienes Somos')),
+                        animatedButton(context, 'Contacto', () => _navigateTo(context, 'Contacto')),
+                        animatedButton(context, 'Servicios', () => _navigateTo(context, 'Servicios')),
+                        animatedButton(context, 'Videos', () => _navigateTo(context, 'Videos')),
+                        animatedButton(context, 'Fotos', () => _navigateTo(context, 'Fotos')),
                       ],
                     ),
                   ),
@@ -148,8 +134,6 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
-
-          // Botón Videos extra abajo centrado
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: _AnimatedElevatedButton(
