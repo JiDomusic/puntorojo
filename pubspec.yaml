@@ -19,7 +19,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   video_player: ^2.7.0
   flutter_animate: ^4.1.1
-  youtube_player_iframe: ^3.0.0
+  youtube_player_iframe: ^2.3.0
 
 dev_dependencies:
   flutter_test:

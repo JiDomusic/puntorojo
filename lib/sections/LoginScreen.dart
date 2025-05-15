@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../admin_dashboard.dart';
-import 'admin_dashboard.dart';  // Importa tu AdminDashboard aquí
+import 'admin_dashboard.dart';
+
+
 
 
 class LoginScreen extends StatefulWidget {

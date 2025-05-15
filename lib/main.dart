@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+
 import 'package:puntorojo/sections/LoginScreen.dart';
 import 'package:puntorojo/sections/contacto_Inga.dart';
 import 'package:puntorojo/sections/historia.dart';
@@ -10,11 +11,14 @@ import 'package:puntorojo/sections/fotos.dart';
 import 'package:puntorojo/sections/cooperativa.dart';
 import 'package:puntorojo/sections/quienes_somos.dart';
 import 'package:puntorojo/sections/servicios.dart';
-import 'package:puntorojo/sections/videos.dart';
 import 'package:puntorojo/sections/fotos2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+// Importa admin_dashboard y videos con alias para evitar conflicto
+import 'package:puntorojo/sections/admin_dashboard.dart' as admin;
+import 'package:puntorojo/sections/videos.dart' as videos_page;
+
 import 'nosotros.dart';
-import 'admin_dashboard.dart'; // Asegúrate que la ruta es correcta
 
 Future<void> main() async {
   usePathUrlStrategy();
@@ -141,13 +145,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         screen = const servicios();
         break;
       case 'Videos':
-        screen = const videos();
+        screen = videos_page.Videos();  // Uso del alias videos_page
         break;
       case 'Fotos2':
         screen = const fotos2();
         break;
       case 'Admin':
-        screen = const LoginScreen(); // Navegación a login
+        screen = const admin.AdminDashboard();  // Uso del alias admin
         break;
       default:
         screen = const Nosotros();
