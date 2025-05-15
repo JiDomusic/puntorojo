@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Web Pública',
+      title: 'punto rojo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: Colors.black,
@@ -91,7 +91,7 @@ class HomeScreen extends StatelessWidget {
                       children: [
                         Center(
                           child: Image.asset('images/puntorojo.jpg',
-                              width: 150, height: 150),
+                              width: 300, height: 300),
                         ),
                         const SizedBox(height: 20),
                         const Text('Punto Rojo',
@@ -114,7 +114,7 @@ class HomeScreen extends StatelessWidget {
                       children: [
                         Center(
                           child: Image.asset('images/coopinga.png',
-                              width: 150, height: 150),
+                              width: 300, height: 300),
                         ),
                         const SizedBox(height: 20),
                         const Text('Cooperativa Inga',
