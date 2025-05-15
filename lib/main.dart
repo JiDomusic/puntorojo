@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:puntorojo/sections/LoginScreen.dart';
 import 'package:puntorojo/sections/contacto_Inga.dart';
 import 'package:puntorojo/sections/historia.dart';
 import 'package:puntorojo/sections/contacto.dart';
@@ -11,8 +12,9 @@ import 'package:puntorojo/sections/quienes_somos.dart';
 import 'package:puntorojo/sections/servicios.dart';
 import 'package:puntorojo/sections/videos.dart';
 import 'package:puntorojo/sections/fotos2.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'nosotros.dart';
+import 'admin_dashboard.dart'; // Asegúrate que la ruta es correcta
 
 Future<void> main() async {
   usePathUrlStrategy();
@@ -50,8 +52,7 @@ class MyApp extends StatelessWidget {
         textTheme: const TextTheme(
           bodyLarge: TextStyle(color: Colors.white),
           bodyMedium: TextStyle(color: Colors.white),
-          titleLarge:
-          TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          titleLarge: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
@@ -74,8 +75,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>
-    with TickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   late final AnimationController _leftController;
   late final Animation<Offset> _leftOffsetAnimation;
   late final AnimationController _rightController;
@@ -89,19 +89,15 @@ class _HomeScreenState extends State<HomeScreen>
       vsync: this,
       duration: const Duration(milliseconds: 800),
     );
-    _leftOffsetAnimation =
-        Tween<Offset>(begin: const Offset(-0.3, 0), end: Offset.zero).animate(
-          CurvedAnimation(parent: _leftController, curve: Curves.easeOut),
-        );
+    _leftOffsetAnimation = Tween<Offset>(begin: const Offset(-0.3, 0), end: Offset.zero)
+        .animate(CurvedAnimation(parent: _leftController, curve: Curves.easeOut));
 
     _rightController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 800),
     );
-    _rightOffsetAnimation =
-        Tween<Offset>(begin: const Offset(0.3, 0), end: Offset.zero).animate(
-          CurvedAnimation(parent: _rightController, curve: Curves.easeOut),
-        );
+    _rightOffsetAnimation = Tween<Offset>(begin: const Offset(0.3, 0), end: Offset.zero)
+        .animate(CurvedAnimation(parent: _rightController, curve: Curves.easeOut));
 
     _leftController.forward();
     _rightController.forward();
@@ -150,6 +146,9 @@ class _HomeScreenState extends State<HomeScreen>
       case 'Fotos2':
         screen = const fotos2();
         break;
+      case 'Admin':
+        screen = const LoginScreen(); // Navegación a login
+        break;
       default:
         screen = const Nosotros();
     }
@@ -194,7 +193,16 @@ class _HomeScreenState extends State<HomeScreen>
     final isMobile = MediaQuery.of(context).size.width < 700;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Inicio')),
+      appBar: AppBar(
+        title: const Text('Inicio'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.admin_panel_settings),
+            tooltip: 'Acceso Admin',
+            onPressed: () => _navigateTo(context, 'Admin'),
+          ),
+        ],
+      ),
       body: LayoutBuilder(
         builder: (context, constraints) {
           return SingleChildScrollView(
@@ -280,8 +288,7 @@ class _HomeScreenState extends State<HomeScreen>
                               child: Container(
                                 decoration: const BoxDecoration(
                                   border: Border(
-                                    right:
-                                    BorderSide(color: Colors.grey, width: 2),
+                                    right: BorderSide(color: Colors.grey, width: 2),
                                   ),
                                 ),
                                 child: buildContent(
