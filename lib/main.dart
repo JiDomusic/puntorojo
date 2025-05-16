@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
-
 import 'package:puntorojo/sections/LoginScreen.dart';
 import 'package:puntorojo/sections/contacto_Inga.dart';
 import 'package:puntorojo/sections/historia.dart';
@@ -14,9 +13,9 @@ import 'package:puntorojo/sections/servicios.dart';
 import 'package:puntorojo/sections/fotos2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-// Importa admin_dashboard y videos con alias para evitar conflicto
 import 'package:puntorojo/sections/admin_dashboard.dart' as admin;
 import 'package:puntorojo/sections/videos.dart' as videos_page;
+import 'package:puntorojo/screens/login_screen.dart'; // 👈 Asegúrate de importar esto
 
 import 'nosotros.dart';
 
@@ -43,7 +42,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'punto rojo',
+      title: 'punto rojo / coopLinga',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: Colors.black,
@@ -114,47 +113,58 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  void _navigateTo(BuildContext context, String title) {
+  Future<void> _navigateTo(BuildContext context, String title) async {
     Widget screen;
-    switch (title) {
-      case 'Nosotros':
-        screen = const Nosotros();
-        break;
-      case 'Historia':
-        screen = const Historia();
-        break;
-      case 'Contacto':
-        screen = const contacto();
-        break;
-      case 'Audiovisuales':
-        screen = const audiovisuales();
-        break;
-      case 'Fotos':
-        screen = const fotos();
-        break;
-      case 'Cooperativa':
-        screen = const cooperativa();
-        break;
-      case 'Quienes Somos':
-        screen = const quienes_somos();
-        break;
-      case 'Contacto2':
-        screen = const contacto_inga();
-        break;
-      case 'Servicios':
-        screen = const servicios();
-        break;
-      case 'Videos':
-        screen = videos_page.Videos();  // Uso del alias videos_page
-        break;
-      case 'Fotos2':
-        screen = const fotos2();
-        break;
-      case 'Admin':
-        screen = const admin.AdminDashboard();  // Uso del alias admin
-        break;
-      default:
-        screen = const Nosotros();
+
+    if (title == 'Admin') {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user == null) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const LoginScreen()),
+        );
+        return;
+      }
+
+      screen = const admin.AdminDashboard();
+    } else {
+      switch (title) {
+        case 'Nosotros':
+          screen = const Nosotros();
+          break;
+        case 'Historia':
+          screen = const Historia();
+          break;
+        case 'Contacto':
+          screen = const contacto();
+          break;
+        case 'Audiovisuales':
+          screen = const audiovisuales();
+          break;
+        case 'Fotos':
+          screen = const fotos();
+          break;
+        case 'Cooperativa':
+          screen = const cooperativa();
+          break;
+        case 'Quienes Somos':
+          screen = const quienes_somos();
+          break;
+        case 'Contacto2':
+          screen = const contacto_inga();
+          break;
+        case 'Servicios':
+          screen = const servicios();
+          break;
+        case 'Videos':
+          screen = videos_page.Videos();
+          break;
+        case 'Fotos2':
+          screen = const fotos2();
+          break;
+        default:
+          screen = const Nosotros();
+      }
     }
 
     Navigator.push(
@@ -198,7 +208,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Inicio'),
+        title: const Text(''),
         actions: [
           IconButton(
             icon: const Icon(Icons.admin_panel_settings),

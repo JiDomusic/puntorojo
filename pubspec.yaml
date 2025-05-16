@@ -20,6 +20,7 @@ dependencies:
   video_player: ^2.7.0
   flutter_animate: ^4.1.1
   youtube_player_iframe: ^2.3.0
+  rive: ^0.12.0
 
 dev_dependencies:
   flutter_test:
@@ -35,3 +36,4 @@ flutter:
     - assets/images/puntorojo2.jpg
     - assets/images/puntorojo3.png
     - assets/images/puntorojo.jpg
+
