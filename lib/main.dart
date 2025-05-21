@@ -6,16 +6,15 @@ import 'package:puntorojo/sections/contacto_Inga.dart';
 import 'package:puntorojo/sections/historia.dart';
 import 'package:puntorojo/sections/contacto.dart';
 import 'package:puntorojo/sections/audiovisuales.dart';
-import 'package:puntorojo/sections/fotos.dart';
+import 'package:puntorojo/sections/fotografía.dart';
 import 'package:puntorojo/sections/cooperativa.dart';
 import 'package:puntorojo/sections/quienes_somos.dart';
 import 'package:puntorojo/sections/servicios.dart';
-import 'package:puntorojo/sections/fotos2.dart';
+import 'package:puntorojo/sections/fotos.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:puntorojo/sections/admin_dashboard.dart' as admin;
 import 'package:puntorojo/sections/videos.dart' as videos_page;
-import 'package:puntorojo/screens/login_screen.dart'; // 👈 Asegúrate de importar esto
+
 
 import 'nosotros.dart';
 
@@ -141,16 +140,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         case 'Audiovisuales':
           screen = const audiovisuales();
           break;
-        case 'Fotos':
-          screen = const fotos();
+        case 'Fotografía':
+          screen = const Fotos();
           break;
         case 'Cooperativa':
-          screen = const cooperativa();
+          screen = const Cooperativa();
           break;
         case 'Quienes Somos':
-          screen = const quienes_somos();
+          screen = const QuienesSomos();
           break;
-        case 'Contacto2':
+        case 'Contacto_Inga':
           screen = const contacto_inga();
           break;
         case 'Servicios':
@@ -159,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         case 'Videos':
           screen = videos_page.Videos();
           break;
-        case 'Fotos2':
+        case 'Fotos':
           screen = const fotos2();
           break;
         default:
@@ -252,7 +251,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               {'label': 'Historia'},
                               {'label': 'Contacto'},
                               {'label': 'Audiovisuales'},
-                              {'label': 'Fotos'},
+                              {'label': 'Fotografía'},
                             ],
                           ),
                         ),
@@ -282,10 +281,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             buttons: [
                               {'label': 'Cooperativa'},
                               {'label': 'Quienes Somos'},
-                              {'label': 'Contacto2'},
+                              {'label': 'Contacto_Inga'},
                               {'label': 'Servicios'},
                               {'label': 'Videos'},
-                              {'label': 'Fotos2'},
+                              {'label': 'Fotos'},
                             ],
                           ),
                         ),
@@ -313,7 +312,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                     {'label': 'Historia'},
                                     {'label': 'Contacto'},
                                     {'label': 'Audiovisuales'},
-                                    {'label': 'Fotos'},
+                                    {'label': 'Fotografía'},
                                   ],
                                 ),
                               ),
@@ -331,10 +330,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 buttons: [
                                   {'label': 'Cooperativa'},
                                   {'label': 'Quienes Somos'},
-                                  {'label': 'Contacto2'},
+                                  {'label': 'Contacto_Inga'},
                                   {'label': 'Servicios'},
                                   {'label': 'Videos'},
-                                  {'label': 'Fotos2'},
+                                  {'label': 'Fotos'},
                                 ],
                               ),
                             ),
