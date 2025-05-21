@@ -41,7 +41,7 @@ class QuienesSomos extends StatelessWidget {
               children: [
                 // Título cálido y elegante
                 Text(
-                  'Somos Cooperativa Linga',
+                  'Somos Cooperativa Inga',
                   style: const TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
