@@ -19,7 +19,7 @@ class QuienesSomos extends StatelessWidget {
       ),
       body: Stack(
         children: [
-          // Fondo degradado suave y elegante
+
           AnimatedContainer(
             duration: const Duration(seconds: 10),
             decoration: const BoxDecoration(
@@ -35,7 +35,7 @@ class QuienesSomos extends StatelessWidget {
             ),
           ),
           SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(24, 100, 24, 100), // dejar espacio abajo para el botón
+            padding: const EdgeInsets.fromLTRB(24, 100, 24, 100),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
